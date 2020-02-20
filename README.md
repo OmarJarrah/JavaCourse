@@ -1,2 +1,2 @@
-# JavaCourse
-Java Course Second Year
+# University
+
