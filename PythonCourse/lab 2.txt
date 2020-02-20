@@ -1,0 +1,18 @@
+def main():
+
+	file=open("names.txt",'r')
+
+	file1=open("outputpassword.txt","w")
+
+	for line in file:
+		first,last=line.split()
+		new_name=((first[0]+last[:7]).lower)
+		file1.write("\n")
+		print(new_name,file=file1)
+
+	file.close()
+	file1.close()
+
+
+main()
+

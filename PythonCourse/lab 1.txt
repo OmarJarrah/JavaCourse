@@ -1,0 +1,14 @@
+def main():
+	print("this program converts a sequence of Unicode numbers into \nthe string of text that it represents.\n")
+
+	entered = input("Please enter the ASCII-encoded message: ")
+	j =entered.split()
+
+	msg="" #to keep repeating the loop
+
+	for numstr in j:
+		num=eval(numstr)
+		msg=msg+chr(num)
+
+	print("\n the decoded message is: ",msg)
+main()

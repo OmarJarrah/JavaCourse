@@ -1,0 +1,19 @@
+def main():
+	print("please enter grade for: lo1, lo2, lo3, lo4: ")
+
+	n1 = input("lo1: ")
+	n2 = input("lo2: ")
+	n3 = input("lo3: ")
+	n4 = input("lo4: ")
+
+	if(n1=='U' or n2=='U' or n3=='U' or n4=='U'):
+                course_grade="U"
+	elif(n1=='P'or n2=='P' or n3=='P' or n4=="P"):
+                course_grade="P"
+	elif(n1=='M' or n2=='M' or n3=='M' or n4=="M"):
+		course_grade="M"
+	else:
+		course_grade="D"
+	print("final course grade is: ", course_grade)
+
+main()

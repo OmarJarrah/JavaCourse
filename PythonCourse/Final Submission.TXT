@@ -1,0 +1,161 @@
+1.	# import the math library for mathmatical functions  
+2.	import math  
+3.	  
+4.	#Create multiple classes, each class contains a function to calculate the area of the certain shape  
+5.	class Square:  
+6.	        def Area(self,x):  
+7.	                    area = round(math.pow(x,2),2) #pow means to the power of the value  
+8.	                    return area  
+9.	class Rectangle:  
+10.	        def Area(self,x,y):  
+11.	                    area = round(x * y,2) #(round ,2) To round the result to two decimal places   
+12.	                    return area  
+13.	class Triangle:  
+14.	        def Area(self,x,y):  
+15.	                    area = round(1/2 * (x * y),2)  
+16.	                    return area  
+17.	class Circle:  
+18.	        def Area(self,x):  
+19.	                    area = round(math.pi * math.pow(x,2),2)  
+20.	                    return area  
+21.	class Parallelogram:  
+22.	        def Area(self,x,y):  
+23.	                    area = round(x * y,2)  
+24.	                    return area  
+25.	class Trapezoid:  
+26.	        def Area(self,x1,x2,y):  
+27.	                    area = round(1/2 * (x1 + x2) * y,2)  
+28.	                    return area  
+29.	  
+30.	def main():  
+31.	        input_FILE = open('input.txt') #Opens the input file  
+32.	  
+33.	        line = input_FILE.readline() #To read the first line of the file  
+34.	  
+35.	        shape = [] #This will hold the letter of the shape  
+36.	  
+37.	        # Arrays to hold the numbers  
+38.	        number1 = []  
+39.	        number2 = []  
+40.	        number3 = []  
+41.	  
+42.	        with open("area.txt","w+") as out:  
+43.	            while line:  
+44.	  
+45.	                    data = line.split() #To split each peice of data seperatly according to the spaces between them  
+46.	                    shape = (data[0]) #To hold all the first column of data from the input_file  
+47.	                    number1 = (data[1]) #To hold all the second column of data from the input_file  
+48.	                    number2 = (data[-1]) #To hold the last coloum for each catagory in the input file  
+49.	                    number3 = (data[-2]) #TO hold all the coloum beforte the last which will only be used in the case of trapezoid  
+50.	                      
+51.	                    if(shape =='r'):  
+52.	                            #Calculate the rectangle area using the function in the areas class  
+53.	                            R_area = Rectangle.Area(int(number1),int(number2))  
+54.	                            #Print the area to the output file  
+55.	                            Area = out.write("r %0.2f \n" % R_area)  
+56.	                    elif(shape =='s'):  
+57.	                            S_area = Square.Area(int(number1))  
+58.	                            Area = out.write("s %0.2f \n" % S_area)  
+59.	  
+60.	                    elif(shape =='t'):  
+61.	                            T_area = Triangle.Area(int(number1),int(number2))  
+62.	                            Area = out.write("t %0.2f \n" % T_area)  
+63.	  
+64.	                    elif(shape =='c'):  
+65.	                            C_area = Circle.Area(int(number1))  
+66.	                            Area = out.write("c %0.2f \n" % C_area)  
+67.	  
+68.	                    elif(shape =='p'):  
+69.	                            P_area = Parallelogram.Area(int(number1),int(number2))  
+70.	                            Area = out.write("p %0.2f \n" % P_area)  
+71.	  
+72.	                    elif(shape =='z'):  
+73.	                            Z_area = Trapezoid.Area(int(number1),int(number3),int(number2))  
+74.	                            Area = out.write("z %0.2f \n" % Z_area)  
+75.	                    else:  
+76.	                        out.write("Input_Error!! \n")  
+77.	  
+78.	                    line = input_FILE.readline() #To read the file line by line to get it sorted later  
+79.	  
+80.	        sorted_data = [] # An array that holds the sorted data  
+81.	        shape1 = [] # An array that hold the shapes before sorting  
+82.	        areas1 = [] # An array that holds the areas before sorting  
+83.	        shape2 = [] # An array that holds the shapes after sorting  
+84.	        areas2 = [] # An array that holds the areas afrer sorting  
+85.	        R = [] # An array that holds all the areas of the Rectangle  
+86.	        S = [] # An array that holds all the areas of the Square  
+87.	        T = [] # An array that holds all the areas of the Triangle  
+88.	        C = [] # An array that holds all the areas of the Circle  
+89.	        P = [] # An array that holds all the areas of the Parallelogram  
+90.	        Z = [] # An array that holds all the areas of the Trapezoid  
+91.	  
+92.	        with open("area.txt") as input_file:  
+93.	  
+94.	            line = input_file.readline()  
+95.	  
+96.	            while line:  
+97.	                data1 = line.split() #Seperate the shape from the area  
+98.	                shape1 = (data1[0])  
+99.	                areas1 = (data1[1])  
+100.	                sorted_data.append([areas1,shape1]) #Appending the data into the array  
+101.	                line = input_file.readline()  
+102.	  
+103.	            sorted_list = sorted(sorted_data, key = lambda x: float(x[0]))  
+104.	  
+105.	        with open("output_file.txt", "w+") as output_file:  
+106.	  
+107.	            for area, shapes in sorted_list:  
+108.	                current_line = '{} {}'.format(area, shapes) #Format the lines so each shape and its area is in a seperate line  
+109.	                data2 = current_line.split()  
+110.	                shape2 = (data2[1])  
+111.	                areas2 = (data2[0])  
+112.	  
+113.	                if(shape2 =='r'):  
+114.	                        Area = output_file.write("Area of Rectangle =\t%0.2f \n" % float(areas2))  
+115.	                        R.append(float(areas2))  
+116.	  
+117.	                elif(shape2 =='s'):  
+118.	                        Area = output_file.write("Area of Square =\t%0.2f \n" % float(areas2))  
+119.	                        S.append(float(areas2))  
+120.	                elif(shape2 =='t'):  
+121.	                        Area = output_file.write("Area of Triangle =\t%0.2f \n" % float(areas2))  
+122.	                        T.append(float(areas2))  
+123.	                elif(shape2 =='c'):  
+124.	                        Area = output_file.write("Area of Circle =\t%0.2f \n" % float(areas2))  
+125.	                        C.append(float(areas2))  
+126.	                elif(shape2 =='p'):  
+127.	                        Area = output_file.write("Area of Parallelogram =\t%0.2f \n" % float(areas2))  
+128.	                        P.append(float(areas2))  
+129.	                elif(shape2 =='z'):  
+130.	                        Area = output_file.write("Area of Trapezoid =\t%0.2f \n" % float(areas2))  
+131.	                        Z.append(float(areas2))  
+132.	                else:  
+133.	                    output_file.write("Input_Error!! \n")  
+134.	  
+135.	  
+136.	            output_file.write("\n") #To print a new line  
+137.	  
+138.	            output_file.write("\nThe Summary of Results: \n")  
+139.	  
+140.	            output_file.write("Total Number of Rectangles =\t%d \n" % len(R)) #Find sum of same shape using len function  
+141.	            output_file.write("Total Area of Rectangles =\t%0.2f \n" % sum(R)) #Find the sum of areas using the sum function  
+142.	  
+143.	            output_file.write("Total Number of Sqaures =\t%d \n" % len(S))  
+144.	            output_file.write("Total Area of Squares =\t\t%0.2f \n" % sum(S))  
+145.	  
+146.	            output_file.write("Total Number of Triangles =\t%d \n" % len(T))  
+147.	            output_file.write("Total Area of Triangles =\t%0.2f \n" % sum(T))  
+148.	  
+149.	            output_file.write("Total Number of Circles =\t%d \n" % len(C))  
+150.	            output_file.write("Total Area of Circles =\t\t%0.2f \n" % sum(C))  
+151.	  
+152.	            output_file.write("Total Number of Parallelograms = %d \n" % len(P))  
+153.	            output_file.write("Total Area of Parallelograms =\t%0.2f \n" % sum(P))  
+154.	  
+155.	            output_file.write("Total Number of Trapezoids =\t%d \n" % len(Z))  
+156.	            output_file.write("Total Area of Trapezoids =\t%0.2f \n" % sum(Z))  
+157.	  
+158.	  
+159.	        input_FILE.close() #Close the input file  
+160.	main()  
+

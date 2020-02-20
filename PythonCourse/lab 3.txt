@@ -1,0 +1,29 @@
+def main():
+
+	loop=1
+	
+	while loop:
+
+		username=input("Enter AlphaNumerical username")
+
+		loop=user_name(username)
+
+
+	def user_name(user):
+
+	if len(username)>=5 and len(username)<=12:
+
+		if username.isalnum():
+
+			if username.islower():
+
+				print("The username is correct")
+
+				return 0
+
+	else:
+
+		print("The username is wrong")
+
+		return 1
+main()

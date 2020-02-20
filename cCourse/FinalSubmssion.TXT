@@ -1,0 +1,119 @@
+#include <stdio.h>
+/*I included stdlib.h library becuase it has the sscanf function, which I will use to read data from the input file*/
+#include <stdlib.h>
+
+/*identifying variables types and names that I will use in the program */
+float g1, g2, g3, g4, avg; // Grades and average
+char s1[15], s2[15], grade; // Firstname , Lastname (both limited to 15 characters), and grade letter.
+
+/*Creating a function that calculates the average grade*/
+float find_average(float g1, float g2, float g3, float g4) 
+{
+	return (g1 + g2 + g3 + g4)/4;
+}
+
+/*Create a function that finds the letter mark of the student according the calculated average grade*/
+char calc_grade_letter(float avg) 
+{
+	char *grade;
+	if (avg>=90)
+	{
+		grade="A";
+	}
+	else if(avg>=80 && avg<90)
+	{
+		grade="B";
+	}
+	else if(avg>=70 && avg<80)
+	{
+		grade="C";
+	}
+	else if(avg>=60 && avg<70)
+	{
+		grade="D";
+	}
+	else if(avg>=50 && avg<60)
+	{
+		grade="F";
+	}															
+	else
+	{
+		grade="U";
+	}
+	return *grade;
+
+	/*
+	Note that I faces this error when compiling so i had to use the * before the grade 
+	my_program.c:17:8: warning: assignment to ‘char’ from ‘char *’ makes integer 
+	from pointer without a cast [-Wint-conversion] grade="A";
+        						    ^
+	*/
+}
+
+int main() {
+	
+	/* Assign a pointer fp1 for the input file and fp2 to output_file */
+	FILE *fp1;
+	FILE *fp2;
+
+	/* Created an array called "str" which can hold a maximum of 50 characters*/
+	char str[50];
+
+	/* Assign variable names to file paths */
+	char* filename1 = "./input_file.txt";
+	char* filename2 = "./output_file.txt";
+
+
+	/*Open the input file in read only mode*/
+	fp1 = fopen(filename1, "r");
+	/* Open the output file to append mode*/		
+	fp2 = fopen(filename2, "a");
+
+
+	/*A way to check that the file exists if fp1 is not found it will warn the user*/
+	if (fp1 == NULL) 
+	{
+		printf("Cannot open file: %s", filename1);
+		return 1;
+	}
+
+	/*Reads the first line of the input file fp1 and store it in array str to be able to text for the first condition in the while loop*/
+
+	fgets(str, 50, fp1);
+
+	/* The following loop does the following:
+		While the file exists (not null, still did not reach the end of it):
+		1. Gets each line and inputs it into the array 'str'
+		2. Print the input from each line into the array */
+
+	while (feof(fp1) == 0) 
+	{
+		/* Process text entry (read from the str array)*/
+		sscanf(str, "%s %s %f %f %f %f", s1, s2, &g1, &g2, &g3, &g4);
+		
+		/* Use a function to calculate each student's average grade */		
+		avg = find_average(g1, g2, g3, g4);
+		
+		/* Use a function to calculate character grade */
+		grade = calc_grade_letter(avg);
+
+		/* Print the output into a file (fp2 pointing to it) I used .2f to make the outout to decimal places as required*/
+		fprintf(fp2, "%s %s\tAverage: %.2f\tGrade: %c\n", s1, s2, avg, grade);
+
+		/* Grab the next line from of the input file */
+		fgets(str, 50, fp1);
+	}
+	
+	/* Close the input file */
+	fclose(fp1);
+
+	/* Close the output file*/
+	fclose(fp2);
+	
+	return 0;
+}
+
+
+
+
+
